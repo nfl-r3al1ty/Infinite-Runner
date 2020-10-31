@@ -1,6 +1,6 @@
 var trex, trex_running, trex_collided;
 var ground, invisibleGround, groundImage;
-
+var gameState = 1;
 var cloudsGroup, cloudImage;
 
 
@@ -21,6 +21,7 @@ function preload(){
 function setup() {
   createCanvas(600, 200);
   
+ 
   trex = createSprite(50,180,20,50);
   trex.addAnimation("running", trex_running);
   trex.scale = 0.5;
@@ -42,12 +43,20 @@ function setup() {
 function draw() {
   background(180);
   
+if (score === 500){
+  gameState = 0;
+}
+
+  if (gameState === 1){
+
   score = score + Math.round(getFrameRate()/60);
   text("Score: "+ score, 500,50);
   
   if(keyDown("space")) {
     trex.velocityY = -10;
   }
+
+  
   
   trex.velocityY = trex.velocityY + 0.8
   
@@ -59,6 +68,10 @@ function draw() {
   spawnClouds();
 
   drawSprites();
+} else {
+  background(0)
+  text("You Win", 300, 100);
+}
 }
 
 function spawnClouds() {
